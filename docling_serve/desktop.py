@@ -5,6 +5,8 @@ import multiprocessing
 import time
 from pathlib import Path
 
+import httpx
+
 from docling_serve.settings import docling_serve_settings, uvicorn_settings
 
 logger = logging.getLogger(__name__)
@@ -78,15 +80,13 @@ def run_desktop(
     max_retries = 30  # 30 seconds timeout
     retry_interval = 1  # 1 second between retries
 
-    import httpx
-
     for attempt in range(max_retries):
         try:
             response = httpx.get(url, timeout=1.0)
             if response.status_code == 200:
                 logger.info("Server is ready!")
                 break
-        except (httpx.ConnectError, httpx.TimeoutException):
+        except (httpx.ConnectError, httpx.RequestError):
             pass
 
         if attempt < max_retries - 1:

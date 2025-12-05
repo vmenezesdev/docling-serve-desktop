@@ -1,7 +1,6 @@
 """Tests for the desktop wrapper module."""
 
 
-
 def test_desktop_module_import():
     """Test that the desktop module can be imported."""
     from docling_serve import desktop

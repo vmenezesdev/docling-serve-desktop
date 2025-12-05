@@ -31,6 +31,20 @@ docling-serve run --enable-ui
 podman run -p 5001:5001 -e DOCLING_SERVE_ENABLE_UI=1 quay.io/docling-project/docling-serve
 ```
 
+### Desktop Application
+
+For a native desktop experience, install the desktop extra and run in desktop mode:
+
+```bash
+# Install with desktop support
+pip install "docling-serve[desktop,ui]"
+
+# Run as a desktop application
+docling-serve desktop
+```
+
+This will start the Docling Serve server and open the UI in a native desktop window using pywebview. Perfect for local usage without needing a web browser!
+
 The server is available at
 
 - API <http://127.0.0.1:5001>

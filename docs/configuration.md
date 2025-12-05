@@ -11,6 +11,35 @@ server and the actual app-specific configurations.
 > via the CLI command line options. Please use environment variables in this
 > type of deployments.
 
+## Desktop mode
+
+For a native desktop application experience, you can use the `desktop` command which combines the server and UI in a single window:
+
+```bash
+# Basic usage
+docling-serve desktop
+
+# With custom options
+docling-serve desktop --port 5002 --width 1400 --height 900 --window-title "My Docling App"
+```
+
+The desktop mode supports the following options:
+
+| CLI option | Default | Description |
+| -----------|---------|-------------|
+| `--host` | `127.0.0.1` | The host to serve on. Use 127.0.0.1 for local access only. |
+| `--port` | `5001` | The port to serve on. |
+| `--artifacts-path` |  | If set to a valid directory, the model weights will be loaded from this path. |
+| `--window-title` | `Docling Serve` | Title of the desktop window. |
+| `--width` | `1200` | Width of the desktop window. |
+| `--height` | `800` | Height of the desktop window. |
+
+**Requirements:** The desktop mode requires `pywebview`. Install it with:
+
+```bash
+pip install "docling-serve[desktop,ui]"
+```
+
 ## Webserver configuration
 
 The following table shows the options which are propagated directly to the

@@ -72,11 +72,34 @@ def run_desktop(
     )
     server_process.start()
 
-    # Wait for the server to start
+    # Wait for the server to start with health check polling
     logger.info("Starting Docling Serve server...")
-    time.sleep(3)  # Give the server time to start
+    url = f"http://{host}:{port}/health"
+    max_retries = 30  # 30 seconds timeout
+    retry_interval = 1  # 1 second between retries
 
-    # Build the URL
+    import httpx
+
+    for attempt in range(max_retries):
+        try:
+            response = httpx.get(url, timeout=1.0)
+            if response.status_code == 200:
+                logger.info("Server is ready!")
+                break
+        except (httpx.ConnectError, httpx.TimeoutException):
+            pass
+
+        if attempt < max_retries - 1:
+            time.sleep(retry_interval)
+        else:
+            logger.error("Server failed to start within the timeout period.")
+            server_process.terminate()
+            raise RuntimeError(
+                "Server did not start within 30 seconds. "
+                "Check if the port is already in use or if there are other errors."
+            )
+
+    # Build the UI URL
     url = f"http://{host}:{port}/ui"
 
     logger.info(f"Opening desktop window at {url}")

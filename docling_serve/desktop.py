@@ -86,10 +86,7 @@ def run_desktop(
                 logger.info("Server is ready!")
                 break
         except (httpx.ConnectError, httpx.RequestError) as e:
-            if attempt == max_retries - 1:
-                logger.debug(
-                    f"Connection attempt {attempt + 1}/{max_retries} failed: {e}"
-                )
+            logger.debug(f"Connection attempt {attempt + 1}/{max_retries} failed: {e}")
 
         if attempt < max_retries - 1:
             time.sleep(retry_interval)

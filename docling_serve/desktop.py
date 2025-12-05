@@ -70,7 +70,6 @@ def run_desktop(
     server_process = multiprocessing.Process(
         target=start_server,
         args=(host, port, artifacts_path, True),
-        daemon=True,
     )
     server_process.start()
 
@@ -86,14 +85,18 @@ def run_desktop(
             if response.status_code == 200:
                 logger.info("Server is ready!")
                 break
-        except (httpx.ConnectError, httpx.RequestError):
-            pass
+        except (httpx.ConnectError, httpx.RequestError) as e:
+            if attempt == max_retries - 1:
+                logger.debug(
+                    f"Connection attempt {attempt + 1}/{max_retries} failed: {e}"
+                )
 
         if attempt < max_retries - 1:
             time.sleep(retry_interval)
         else:
             logger.error("Server failed to start within the timeout period.")
             server_process.terminate()
+            server_process.join(timeout=5)
             raise RuntimeError(
                 "Server did not start within 30 seconds. "
                 "Check if the port is already in use or if there are other errors."
@@ -122,4 +125,7 @@ def run_desktop(
             server_process.terminate()
             server_process.join(timeout=5)
             if server_process.is_alive():
+                logger.warning(
+                    "Server did not terminate gracefully, forcing shutdown..."
+                )
                 server_process.kill()

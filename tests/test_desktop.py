@@ -26,7 +26,10 @@ def test_pyproject_has_desktop_extra():
     """Test that pyproject.toml has the desktop extra dependency."""
     from pathlib import Path
 
-    import tomllib
+    try:
+        import tomllib
+    except ImportError:
+        import tomli as tomllib
 
     pyproject_path = Path(__file__).parent.parent / "pyproject.toml"
     with open(pyproject_path, "rb") as f:

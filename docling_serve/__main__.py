@@ -4,7 +4,7 @@ import platform
 import sys
 import warnings
 from pathlib import Path
-from typing import Annotated, Any, Optional, Union
+from typing import Annotated, Any, Union
 
 import typer
 import uvicorn
@@ -205,17 +205,17 @@ def dev(
         int, typer.Option(help="Timeout for the server response.")
     ] = uvicorn_settings.timeout_keep_alive,
     ssl_certfile: Annotated[
-        Optional[Path], typer.Option(help="SSL certificate file")
+        Path | None, typer.Option(help="SSL certificate file")
     ] = uvicorn_settings.ssl_certfile,
     ssl_keyfile: Annotated[
-        Optional[Path], typer.Option(help="SSL key file")
+        Path | None, typer.Option(help="SSL key file")
     ] = uvicorn_settings.ssl_keyfile,
     ssl_keyfile_password: Annotated[
-        Optional[str], typer.Option(help="SSL keyfile password")
+        str | None, typer.Option(help="SSL keyfile password")
     ] = uvicorn_settings.ssl_keyfile_password,
     # docling options
     artifacts_path: Annotated[
-        Optional[Path],
+        Path | None,
         typer.Option(
             help=(
                 "If set to a valid directory, "
@@ -312,17 +312,17 @@ def run(
         int, typer.Option(help="Timeout for the server response.")
     ] = uvicorn_settings.timeout_keep_alive,
     ssl_certfile: Annotated[
-        Optional[Path], typer.Option(help="SSL certificate file")
+        Path | None, typer.Option(help="SSL certificate file")
     ] = uvicorn_settings.ssl_certfile,
     ssl_keyfile: Annotated[
-        Optional[Path], typer.Option(help="SSL key file")
+        Path | None, typer.Option(help="SSL key file")
     ] = uvicorn_settings.ssl_keyfile,
     ssl_keyfile_password: Annotated[
-        Optional[str], typer.Option(help="SSL keyfile password")
+        str | None, typer.Option(help="SSL keyfile password")
     ] = uvicorn_settings.ssl_keyfile_password,
     # docling options
     artifacts_path: Annotated[
-        Optional[Path],
+        Path | None,
         typer.Option(
             help=(
                 "If set to a valid directory, "
@@ -395,6 +395,62 @@ def rq_worker() -> Any:
     run_worker(
         rq_config=rq_config,
         cm_config=cm_config,
+    )
+
+
+@app.command()
+def desktop(
+    *,
+    host: Annotated[
+        str,
+        typer.Option(help="The host to serve on. Use 127.0.0.1 for local access only."),
+    ] = "127.0.0.1",
+    port: Annotated[
+        int,
+        typer.Option(help="The port to serve on."),
+    ] = 5001,
+    artifacts_path: Annotated[
+        Path | None,
+        typer.Option(
+            help=(
+                "If set to a valid directory, "
+                "the model weights will be loaded from this path."
+            )
+        ),
+    ] = None,
+    window_title: Annotated[
+        str,
+        typer.Option(help="Title of the desktop window."),
+    ] = "Docling Serve",
+    width: Annotated[
+        int,
+        typer.Option(help="Width of the desktop window."),
+    ] = 1200,
+    height: Annotated[
+        int,
+        typer.Option(help="Height of the desktop window."),
+    ] = 800,
+) -> Any:
+    """
+    Run [bold]Docling Serve[/bold] as a [cyan]desktop application[/cyan]. 🖥️
+
+    This command starts the Docling Serve server locally and opens the UI
+    in a native desktop window using pywebview.
+
+    The desktop mode is ideal for local usage and provides a native application
+    experience without the need for a web browser.
+    """
+    from docling_serve.desktop import run_desktop
+
+    console.print("Starting Docling Serve Desktop Application 🖥️")
+
+    run_desktop(
+        host=host,
+        port=port,
+        artifacts_path=artifacts_path,
+        window_title=window_title,
+        width=width,
+        height=height,
     )
 
 

@@ -65,6 +65,9 @@ rapidocr = [
 flash-attn = [
   "flash-attn~=2.8.2; sys_platform == 'linux' and platform_machine == 'x86_64'"
 ]
+desktop = [
+    "pywebview>=5.0,<6.0",
+]
 
 [dependency-groups]
 dev = [

@@ -36,7 +36,7 @@ podman run -p 5001:5001 -e DOCLING_SERVE_ENABLE_UI=1 quay.io/docling-project/doc
 For a native desktop experience, install the desktop extra and run in desktop mode:
 
 ```bash
-# Install with desktop support
+# Install with desktop support (includes RapidOCR by default)
 pip install "docling-serve[desktop,ui]"
 
 # Run as a desktop application
@@ -44,6 +44,49 @@ docling-serve desktop
 ```
 
 This will start the Docling Serve server and open the UI in a native desktop window using pywebview. Perfect for local usage without needing a web browser!
+
+#### Building a Portable Desktop Executable
+
+You can create a standalone portable `.exe` file that includes all dependencies (including RapidOCR for OCR) and requires no installation:
+
+```bash
+# Install build dependencies
+pip install -r requirements-build.txt
+
+# Build the portable executable
+python build_portable.py
+
+# Or with custom options
+python build_portable.py --clean --no-upx
+```
+
+This will create a `dist/DoclingServeDesktop` folder containing:
+
+- `DoclingServeDesktop.exe` - The standalone executable
+- `Start Docling Desktop.bat` - Quick launcher script
+- `README.txt` - Usage instructions
+- All required dependencies and models
+
+**Features of the portable build:**
+
+- ✅ No Python installation required
+- ✅ RapidOCR included by default for OCR
+- ✅ All dependencies embedded
+- ✅ No additional downloads needed
+- ✅ Can be copied to any Windows machine
+- ✅ Runs directly without installation
+
+**System Requirements:**
+
+- Windows 10 or later (64-bit)
+- ~2GB disk space
+- 4GB+ RAM recommended
+
+**Build Options:**
+
+- `--clean` - Remove previous build artifacts before building
+- `--no-upx` - Disable UPX compression (larger file size but faster build)
+- `--skip-deps` - Skip dependency installation check
 
 The server is available at
 

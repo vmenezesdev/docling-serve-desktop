@@ -67,6 +67,8 @@ flash-attn = [
 ]
 desktop = [
     "pywebview>=5.0,<6.0",
+    "rapidocr>=3.3,<4.0.0",
+    "onnxruntime>=1.7.0,<2.0.0",
 ]
 
 [dependency-groups]

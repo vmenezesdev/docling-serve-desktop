@@ -1,0 +1,11 @@
+# Build requirements for creating portable executable
+# Install with: pip install -r requirements-build.txt
+
+# PyInstaller for creating executable
+pyinstaller>=6.0.0
+
+# UPX for compression (optional, download separately)
+# Download from: https://upx.github.io/
+
+# Core application with desktop and OCR support
+-e .[desktop,rapidocr,ui]

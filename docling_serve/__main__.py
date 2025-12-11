@@ -226,7 +226,7 @@ def dev(
     enable_ui: Annotated[bool, typer.Option(help="Enable the development UI.")] = True,
 ) -> Any:
     """
-    Run a [bold]Docling Serve[/bold] app in [yellow]development[/yellow] mode. 🧪
+    Run a [bold]Docling Serve[/bold] app in [yellow]development[/yellow] mode. 
 
     This is equivalent to [bold]docling-serve run[/bold] but with [bold]reload[/bold]
     enabled and listening on the [blue]127.0.0.1[/blue] address.
@@ -335,7 +335,7 @@ def run(
     ] = docling_serve_settings.enable_ui,
 ) -> Any:
     """
-    Run a [bold]Docling Serve[/bold] app in [green]production[/green] mode. 🚀
+    Run a [bold]Docling Serve[/bold] app in [green]production[/green] mode. 
 
     This is equivalent to [bold]docling-serve dev[/bold] but with [bold]reload[/bold]
     disabled and listening on the [blue]0.0.0.0[/blue] address.
@@ -432,7 +432,7 @@ def desktop(
     ] = 800,
 ) -> Any:
     """
-    Run [bold]Docling Serve[/bold] as a [cyan]desktop application[/cyan]. 🖥️
+    Run [bold]Docling Serve[/bold] as a [cyan]desktop application[/cyan]. 
 
     This command starts the Docling Serve server locally and opens the UI
     in a native desktop window using pywebview.
@@ -442,7 +442,7 @@ def desktop(
     """
     from docling_serve.desktop import run_desktop
 
-    console.print("Starting Docling Serve Desktop Application 🖥️")
+    console.print("Starting Docling Serve Desktop Application ")
 
     run_desktop(
         host=host,

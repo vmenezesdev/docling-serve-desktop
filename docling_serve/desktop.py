@@ -66,6 +66,14 @@ def run_desktop(
         )
         raise
 
+    # Set multiprocessing start method to 'spawn' for Windows compatibility
+    # This is critical for PyInstaller frozen executables
+    if multiprocessing.get_start_method(allow_none=True) != 'spawn':
+        try:
+            multiprocessing.set_start_method('spawn', force=True)
+        except RuntimeError:
+            pass  # Already set
+
     # Start the server in a separate process
     server_process = multiprocessing.Process(
         target=start_server,

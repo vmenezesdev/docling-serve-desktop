@@ -250,6 +250,8 @@ MANIFEST
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
+# But keep the spec file for build_portable
+!build_portable.spec
 
 # Installer logs
 pip-log.txt

@@ -88,6 +88,34 @@ This will create a `dist/DoclingServeDesktop` folder containing:
 - `--no-upx` - Disable UPX compression (larger file size but faster build)
 - `--skip-deps` - Skip dependency installation check
 
+#### Creating an Installer
+
+For easier distribution, you can create a Windows installer using Inno Setup:
+
+```bash
+# Prerequisites: Install Inno Setup from https://jrsoftware.org/isdl.php
+
+# Build the installer (builds portable executable first, then creates installer)
+python build_installer.py
+
+# Or use existing portable build
+python build_installer.py --skip-build
+
+# Clean build before creating installer
+python build_installer.py --clean
+```
+
+This creates `installer_output/DoclingServeDesktop-Setup.exe`, a simple installation wizard that:
+
+- Installs to Program Files by default
+- Creates Start Menu shortcuts
+- Optionally creates Desktop shortcut
+- **Optionally runs at Windows startup** (enabled by default)
+- Includes uninstaller
+- Checks for sufficient disk space (3GB required)
+
+The installer provides a user-friendly way to install and uninstall Docling Serve Desktop on Windows machines. When startup is enabled, the application will launch automatically when Windows starts.
+
 The server is available at
 
 - API <http://127.0.0.1:5001>

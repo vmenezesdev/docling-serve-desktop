@@ -451,3 +451,6 @@ cookies.txt
 
 # Examples
 /examples/splitted_pdf/*
+
+# Executables and binaries
+*.exe
